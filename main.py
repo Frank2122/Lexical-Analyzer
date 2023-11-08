@@ -2,30 +2,30 @@ import re
 #Imported re to handle regular expressions
 
 def tokenize_code(input_file):
-    # Define regular expressions for different types of tokens
-    keyword_regex = r'\b(if|else|return|while|for|int|float|char|void)\b'
-    separator_regex = r'([{}();])'
-    operator_regex = r'([=+\-*/<>]=?)'
-    identifier_regex = r'\b[a-zA-Z_][a-zA-Z0-9_]*\b'
-    integer_regex = r'\b\d+\b'
-    comment_regex = r'\/\/.*'
+    # Defined regular expressions for different types of tokens
+    keyword = r'\b(if|else|return|while|for|int|float|char|void)\b'
+    separator = r'([{}();])'
+    operator = r'([=+\-*/<>]=?)'
+    identifier = r'\b[a-zA-Z_][a-zA-Z0-9_]*\b'
+    integer = r'\b\d+\b'
+    comment = r'\/\/.*'
 
-    # Create a dictionary to map regular expressions to their corresponding token names
+    # Created a dictionary to map regular expressions to their corresponding token names
     token_patterns = {
-        keyword_regex: "keyword",
-        separator_regex: "separator",
-        operator_regex: "operator",
-        identifier_regex: "identifier",
-        integer_regex: "integer",
-        comment_regex: "comment",
+        keyword: "keyword",
+        separator: "separator",
+        operator: "operator",
+        identifier: "identifier",
+        integer: "integer",
+        comment: "comment",
     }
 
     lexemes_and_tokens = []
 
     with open(input_file, 'r') as file:
         for line in file:
-            # Remove comments
-            line = re.sub(comment_regex, '', line)
+            # Removes comments, hopefully
+            line = re.sub(comment, '', line)
             line = line.strip()
 
             if not line:
@@ -52,6 +52,6 @@ if __name__ == "__main__":
     input_file = "input.txt"
     lexemes_and_tokens = tokenize_code(input_file)
 
-    # Print the result
+    # Prints the result, hopefully
     for lexeme, token in lexemes_and_tokens:
         print(f'"{lexeme}" = {token}')
