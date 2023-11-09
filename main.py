@@ -1,16 +1,18 @@
-import re
+import re #Imported to read regular expressions
 
+#defined different KEYWORDS, OPERATORS, and SEPARATORS
 KEYWORDS = ["if", "else", "return", "int", "float", "char", "void"]
 OPERATORS = [
     "+", "-", "*", "/", "=", "<", ">", "&", "|", "^", "!", "~", "?", ":", "==", "!=", ">="
 ]
 SEPARATORS = ["(", ")", "{", "}", "[", "]", ";", ","]
 
+#Tokenizes our .txt file
 def tokenize(code):
     tokens = []
     lines = code.split('\n')
     for line in lines:
-        # Remove comments in each line
+        # Removes comment in each line. Needed to implement to handle phrases after "//"
         line = line.split('//')[0]
         for match in re.finditer(r"(\b\w+\b)|(\W)", line):
             match = match.group(0)
@@ -20,7 +22,7 @@ def tokenize(code):
                 tokens.append((match, "OPERATOR"))
             elif match in SEPARATORS:
                 tokens.append((match, "SEPARATOR"))
-            elif match.isdigit():
+            elif match.isdigit(): 
                 tokens.append((match, "INTEGER"))
             elif match.isalpha():
                 tokens.append((match, "IDENTIFIER"))
