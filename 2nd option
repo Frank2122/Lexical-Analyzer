@@ -1,0 +1,39 @@
+import re  # Import regular expression library for pattern matching
+
+# Define lists containing keywords, operators, and separators
+KEYWORDS = ["if", "else", "return", "int", "float", "char", "void"]
+OPERATORS = [
+    "+", "-", "*", "/", "=", "<", ">", "&", "|", "^", "!", "~", "?", ":", "==", "!=", ">="  # Include special character >=
+]
+SEPARATORS = ["(", ")", "{", "}", "[", "]", ";", ","]
+
+# Function to tokenize the input code
+def tokenize(code):
+    tokens = []  # Initialize an empty list to store tokens
+    for match in re.findall(r"(\w+)|(\W+)", code):  # Find all words and non-words using regular expressions
+        if match[0] in KEYWORDS:  # Check if the matched word is a keyword
+            tokens.append((match[0], "KEYWORD"))  # Add (word, type) tuple to the token list
+        elif match[0] in OPERATORS:  # Check if the matched word is an operator
+            tokens.append((match[0], "OPERATOR"))  # Add (word, type) tuple to the token list
+        elif match[0] in SEPARATORS:  # Check if the matched word is a separator
+            tokens.append((match[0], "SEPARATOR"))  # Add (word, type) tuple to the token list
+        elif match[0].isdigit():  # Check if the matched word is a digit (integer)
+            tokens.append((match[0], "INTEGER"))  # Add (word, type) tuple to the token list
+        elif match[0].isalpha():  # Check if the matched word is a letter (identifier)
+            tokens.append((match[0], "IDENTIFIER"))  # Add (word, type) tuple to the token list
+        else:  # Ignore any other characters
+            pass  # Do nothing for unrecognized characters
+    return tokens  # Return the list of tokens
+
+# Main function to read input code, tokenize it, and print the results
+def main():
+    with open("input.txt", "r") as f:  # Open the input file in read mode
+        code = f.read()  # Read the entire contents of the input file
+
+    tokens = tokenize(code)  # Tokenize the input code using the tokenize() function
+
+    for token in tokens:  # Iterate through the list of tokens
+        print(token)  # Print each token (word, type) tuple
+
+if __name__ == "__main__":  # Check if the script is executed directly
+    main()  # Call the main function to start the program
